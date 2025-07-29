@@ -8,7 +8,7 @@ import { Avatar, AvatarImage, AvatarFallback } from '../ui/avatar';
 import { Separator } from '../ui/separator';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
-import { LogOut, User, Home, Plus, CheckCircle, Star, Trophy, Gift, Trash2, Edit3, Calendar } from 'lucide-react';
+import { LogOut, User, Home, Plus, CheckCircle, Star, Trash2, Calendar } from 'lucide-react';
 import { Container } from '../../lib/dev-container';
 
 interface Task {
@@ -242,7 +242,7 @@ export const Dashboard: React.FC = () => {
         </Container>
 
         {/* Navigation Tabs */}
-        <Container componentId="dashboard-nav">
+        <Container componentId="dashboard-page">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <div className="flex space-x-2">
               <Button
@@ -544,7 +544,7 @@ export const Dashboard: React.FC = () => {
             )}
 
             {activeTab === 'profile' && (
-              <Container componentId="user-profile-section">
+              <Container componentId="dashboard-page">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <Card className="bg-white/20 backdrop-blur-sm border border-white/30">
                     <CardHeader>
