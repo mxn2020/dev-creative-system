@@ -1,9 +1,9 @@
 // src/pages/Landing.tsx
 
 import React, { useState, useEffect } from 'react';
-import { Star, Heart, Trophy, Smile, CheckCircle, Gift, Users, Sparkles } from 'lucide-react';
+import { CheckCircle, Trophy, Heart, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { Container, Button, Card, CardContent, Badge, Header, Nav, Section, Span, H1, H2, P, Div, Footer } from '../lib/dev-container';
+import { Container, Button, Card, CardContent, Header, Nav, Section, Span, H1, H2, P, Div, Footer } from '../lib/dev-container';
 import { useAuth } from '../components/auth/AuthProvider';
 import type { ComponentRegistryId } from '../registry/componentRegistry';
 
@@ -19,7 +19,7 @@ const getStatCardId = (index: number): ComponentRegistryId => {
 };
 
 const getBenefitCardId = (index: number): ComponentRegistryId => {
-  const ids: ComponentRegistryId[] = ['benefit-card-0', 'benefit-card-1', 'benefit-card-2', 'benefit-card-3'];
+  const ids: ComponentRegistryId[] = ['noID', 'noID', 'noID', 'noID'];
   return ids[index] || 'noID';
 };
 
@@ -217,7 +217,7 @@ export const Landing: React.FC = () => {
               >
                 Make Tasks 
                 <Span 
-                  devId="fun-highlight" 
+                  devId="noID" 
                   devName="Fun Highlight" 
                   devDescription="Highlighted 'FUN' text with rainbow gradient"
                   className="bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 bg-clip-text text-transparent"
@@ -243,7 +243,7 @@ export const Landing: React.FC = () => {
                 {isAuthenticated ? (
                   <Link to="/dashboard">
                     <Button 
-                      devId="hero-start-playing"
+                      devId="hero-start-building"
                       devName="Start Playing Button"
                       devDescription="Primary button to start using the app"
                       className="bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 hover:from-green-500 hover:via-blue-600 hover:to-purple-700 text-white px-8 py-4 rounded-full font-bold text-lg shadow-xl transform hover:scale-105 transition-all"
@@ -254,7 +254,7 @@ export const Landing: React.FC = () => {
                 ) : (
                   <Link to="/register">
                     <Button 
-                      devId="hero-start-playing"
+                      devId="hero-start-building"
                       devName="Start Playing Button"
                       devDescription="Primary button to start using the app"
                       className="bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 hover:from-green-500 hover:via-blue-600 hover:to-purple-700 text-white px-8 py-4 rounded-full font-bold text-lg shadow-xl transform hover:scale-105 transition-all"
@@ -264,7 +264,7 @@ export const Landing: React.FC = () => {
                   </Link>
                 )}
                 <Button 
-                  devId="hero-learn-more"
+                  devId="noID"
                   devName="Learn More Button"
                   devDescription="Secondary button to learn more about features"
                   className="bg-white/20 backdrop-blur-sm border-2 border-white/30 text-white hover:bg-white/30 px-8 py-4 rounded-full font-bold text-lg transition-all"
@@ -342,7 +342,7 @@ export const Landing: React.FC = () => {
         </Container>
 
         {/* Benefits Section */}
-        <Container componentId="benefits-section">
+        <Container componentId="noID">
           <Section devId="noID" className="container mx-auto px-4 py-20">
             <Div devId="noID" className="text-center mb-16">
               <Div devId="noID" className="text-5xl mb-4">🎁🌈🎊</Div>
@@ -376,7 +376,7 @@ export const Landing: React.FC = () => {
         </Container>
 
         {/* Sample Tasks Preview */}
-        <Container componentId="preview-section">
+        <Container componentId="noID">
           <Section devId="noID" className="container mx-auto px-4 py-20">
             <Div devId="noID" className="text-center mb-16">
               <Div devId="noID" className="text-5xl mb-4">👀📱✨</Div>
@@ -388,7 +388,7 @@ export const Landing: React.FC = () => {
               </P>
             </Div>
             <Div devId="noID" className="max-w-md mx-auto">
-              <Card className="bg-white/20 backdrop-blur-sm rounded-2xl p-6 border border-white/30 shadow-xl">
+              <Card devId="noID" devName="Sample Task Card" devDescription="Preview of how tasks look in the app" className="bg-white/20 backdrop-blur-sm rounded-2xl p-6 border border-white/30 shadow-xl">
                 <CardContent devId="noID" className="p-0">
                   <Div devId="noID" className="space-y-4">
                     <Div devId="noID" className="flex items-center p-3 bg-green-400/20 rounded-xl border border-green-400/30">
@@ -435,7 +435,7 @@ export const Landing: React.FC = () => {
                 {isAuthenticated ? (
                   <Link to="/dashboard">
                     <Button 
-                      devId="cta-start-adventure"
+                      devId="noID"
                       devName="Start Adventure Button"
                       devDescription="Primary CTA button to start using the app"
                       className="bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 hover:from-green-500 hover:via-blue-600 hover:to-purple-700 text-white px-10 py-4 rounded-full font-bold text-lg shadow-xl transform hover:scale-105 transition-all"
@@ -446,7 +446,7 @@ export const Landing: React.FC = () => {
                 ) : (
                   <Link to="/register">
                     <Button 
-                      devId="cta-start-adventure"
+                      devId="noID"
                       devName="Start Adventure Button"
                       devDescription="Primary CTA button to start using the app"
                       className="bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 hover:from-green-500 hover:via-blue-600 hover:to-purple-700 text-white px-10 py-4 rounded-full font-bold text-lg shadow-xl transform hover:scale-105 transition-all"
@@ -456,7 +456,7 @@ export const Landing: React.FC = () => {
                   </Link>
                 )}
                 <Button 
-                  devId="cta-tell-parents"
+                  devId="noID"
                   devName="Tell Parents Button"
                   devDescription="Secondary CTA button for parental involvement"
                   className="bg-white/20 backdrop-blur-sm border-2 border-white/30 text-white hover:bg-white/30 px-10 py-4 rounded-full font-bold text-lg transition-all"
