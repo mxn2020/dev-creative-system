@@ -15,57 +15,123 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Application data models (not auth-related)
-model Post {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  title     String
-  content   String?
-  published Boolean  @default(false)
-  authorId  String   // References Better Auth user ID (not a Prisma relation)
-  slug      String   @unique
-  tags      String[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  comments  Comment[]
-}
-
-model Comment {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  content   String
-  authorId  String   // References Better Auth user ID
-  postId    String   @db.ObjectId
-  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+// Kids Todo App Models
+model Task {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String?
+  completed   Boolean  @default(false)
+  emoji       String   @default("📝")
+  stars       Int      @default(10)
+  dueDate     DateTime?
+  userId      String   // References Better Auth user ID
+  categoryId  String   @db.ObjectId
+  category    Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  completedAt DateTime?
 }
 
 model Category {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  name        String   @unique
+  name        String
+  emoji       String
+  color       String   @default("#3b82f6")
   description String?
-  color       String?  @default("#3b82f6")
+  userId      String   // References Better Auth user ID
+  tasks       Task[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
 
-// Example model for user preferences (linked to Better Auth users)
+model Reward {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String?
+  emoji       String
+  cost        Int      // Cost in stars
+  type        String   // "badge", "theme", "emoji_pack", "celebration"
+  unlocked    Boolean  @default(false)
+  userId      String   // References Better Auth user ID
+  unlockedAt  DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Achievement {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  description String
+  emoji       String
+  type        String   // "tasks_completed", "stars_earned", "streak", "category_master"
+  requirement Int      // Number needed to unlock (e.g., 10 tasks, 100 stars)
+  earned      Boolean  @default(false)
+  userId      String   // References Better Auth user ID
+  earnedAt    DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// User preferences for the kids todo app
 model UserPreference {
   id                String   @id @default(auto()) @map("_id") @db.ObjectId
   userId            String   @unique // Better Auth user ID
-  theme             String   @default("light") // "light" | "dark" | "system"
-  emailNotifications Boolean  @default(true)
-  language          String   @default("en")
-  timezone          String   @default("UTC")
+  theme             String   @default("rainbow") // "rainbow", "ocean", "forest", "space"
+  soundEnabled      Boolean  @default(true)
+  celebrationStyle  String   @default("confetti") // "confetti", "fireworks", "sparkles"
+  parentalControls  Boolean  @default(false)
+  dailyGoal         Int      @default(3) // Number of tasks to complete daily
+  reminderTime      String?  // Time for daily reminders (HH:MM format)
+  favoriteEmoji     String   @default("⭐")
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 }
 
-// Example model for application settings
+// Streak tracking for motivation
+model Streak {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String   @unique // Better Auth user ID
+  currentStreak Int      @default(0)
+  longestStreak Int      @default(0)
+  lastActiveDate DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+// Daily stats for progress tracking
+model DailyStats {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId          String   // Better Auth user ID
+  date            DateTime @db.Date
+  tasksCompleted  Int      @default(0)
+  starsEarned     Int      @default(0)
+  timeSpent       Int      @default(0) // Minutes spent in app
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([userId, date])
+}
+
+// Parental controls and family sharing
+model FamilyMember {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  childUserId String  // Better Auth user ID of the child
+  parentUserId String // Better Auth user ID of the parent
+  role       String   @default("parent") // "parent", "guardian", "sibling"
+  permissions String[] @default(["view_progress", "create_tasks"]) // Array of permissions
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([childUserId, parentUserId])
+}
+
+// App settings for the kids todo system
 model AppSetting {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   key       String   @unique
   value     String
   type      String   @default("string") // "string" | "number" | "boolean" | "json"
+  category  String   @default("general") // "general", "rewards", "achievements", "ui"
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
